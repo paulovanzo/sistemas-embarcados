@@ -1,0 +1,25 @@
+global:
+  resolve_timeout: 1m
+
+route:
+  receiver: 'email-notifications'
+
+receivers:
+  - name: 'email-notifications'
+    email_configs:
+      - to: paulo.moura.109@ufrn.edu.br
+        send_resolved: true
+        html: |
+          <html>
+          <body>
+            <h1>Alertmanager Alert</h1>
+            <p><b>Alert:</b> {{ .CommonAnnotations.summary }}</p>
+            <p><b>Description:</b> {{ .CommonAnnotations.description }}</p>
+            <p><b>Alert Details:</b></p>
+            <ul>
+              {{ range .Alerts }}
+                <li><b>Alert:</b> {{ .Annotations.summary }} - <i>{{ .Annotations.description }}</i></li>
+              {{ end }}
+            </ul>
+          </body>
+          </html>

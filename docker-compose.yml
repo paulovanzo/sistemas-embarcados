@@ -1,0 +1,53 @@
+services:
+  prometheus:
+    container_name: prometheus
+    image: prom/prometheus:v2.39.1
+    volumes:
+      - ./rules:/etc/prometheus
+    expose:
+      - 9090
+
+  grafana:
+    image: grafana/grafana:latest
+    container_name: grafana
+    ports:
+      - "3000:3000"
+    depends_on:
+      - prometheus
+    environment:
+      GF_SECURITY_ADMIN_PASSWORD: admin
+      GF_USERS_ALLOW_SIGN_UP: "false"
+
+  alertmanager:
+    image: prom/alertmanager:v0.24.0
+    container_name: alertmanager
+    volumes:
+      - ./alertmanager/:/etc/alertmanager/
+    command:
+      - '--config.file=/etc/alertmanager/config.yml'
+      - '--storage.path=/alertmanager'
+    expose:
+      - 9093
+    restart: unless-stopped
+
+  rabbitmq:
+    image: rabbitmq:3-management
+    container_name: rabbitmq
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+    environment:
+      RABBITMQ_DEFAULT_USER: user
+      RABBITMQ_DEFAULT_PASS: password
+    restart: always
+
+  django-backend:
+    build:
+      context: ./django/
+      dockerfile: devops/Dockerfile
+    restart: unless-stopped
+    ports:
+      - 9093:9093
+      - 8000:8000
+    depends_on:
+      - rabbitmq

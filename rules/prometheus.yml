@@ -1,0 +1,35 @@
+global:
+  scrape_interval:     15s # By default, scrape targets every 15 seconds.
+  evaluation_interval: 15s # Evaluate rules every 15 seconds.
+
+  external_labels:
+    monitor: 'Turbidity'
+
+alerting:
+  alert_relabel_configs:
+      - source_labels: [monitor]
+        action: replace
+        regex: (.*)
+        replacement: "$1"
+        target_label: monitor
+  alertmanagers:
+    - static_configs:
+      - targets:
+        - alertmanager:9093
+
+rule_files:
+  - 'rules.yml'
+
+scrape_configs:
+  - job_name: 'Prometheus'
+    scrape_interval: 5s
+    static_configs:
+      - targets: ['localhost:9090']
+        labels:
+          group: 'Prometheus'
+  - job_name: 'Monitor Turbidity'
+    scrape_interval: 5s
+    static_configs:
+      - targets: ['backend:9093']
+        labels:
+          group: "Servidor" 

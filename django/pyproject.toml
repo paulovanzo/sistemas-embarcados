@@ -1,0 +1,16 @@
+[tool.poetry]
+name = "sistemas-embarcados"
+version = "0.1.0"
+description = ""
+authors = ["Paulo Vanzolini, Lucas Agnez e Rafael Gomes"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.10"
+django = "^4.2"
+uvicorn = "^0.30.6"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
