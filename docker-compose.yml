@@ -34,11 +34,11 @@ services:
     image: rabbitmq:3-management
     container_name: rabbitmq
     ports:
-      - "5672:5672"
+      - "3001:5672"
       - "15672:15672"
     environment:
-      RABBITMQ_DEFAULT_USER: user
-      RABBITMQ_DEFAULT_PASS: password
+      RABBITMQ_DEFAULT_USER: teste
+      RABBITMQ_DEFAULT_PASS: embedded@123
     restart: always
 
   django-backend:
