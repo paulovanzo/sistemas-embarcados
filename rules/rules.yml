@@ -1,5 +1,11 @@
 groups:
-- name: turbidity-sensor
+- name: Turbidity Alerts
   rules:
-  - record: job_instance_mode:node_cpu_seconds:avg_rate5m
-    expr: avg by (job, instance, mode) (rate(node_cpu_seconds_total[5m]))
+  - alert: HighTurbidity
+    expr: Turbidity > 3000
+    for: 5m
+    labels:
+      severity: critical
+    annotations:
+      summary: "Turbidity level is too high!"
+      description: "Turbidity has exceeded 3000 for more than 5 minutes. Current value: {{ $value }}."

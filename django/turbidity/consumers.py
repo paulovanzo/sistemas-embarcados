@@ -2,6 +2,8 @@ import pika
 from django.conf import settings
 import logging
 import threading
+
+import pika.exceptions
 from prometheus_client import Gauge
 
 turdity = Gauge('Turbidity', 'Valor de turbidez da água')
@@ -48,7 +50,7 @@ class RabbitMQManager:
             logger.info(f"Connected to RabbitMQ on {self.host}, exchange '{self.exchange}', queue '{self.queue_name}'")
         except Exception as e:
             logger.critical(f"Failed to connect to RabbitMQ: {e}")
-            raise "RabbitMQException"
+            raise pika.exceptions.ConnectionClosed
 
     def start_consuming(self, callback):
         """Inicia o consumo de mensagens da fila."""
@@ -61,7 +63,7 @@ class RabbitMQManager:
             self.channel.start_consuming()
         except Exception as e:
             logger.error(f"Failed to consume messages: {e}")
-            raise "RabbitNotConsuming"
+            raise pika.exceptions.ConsumerCancelled
 
     def stop(self):
         """Encerra a conexão com RabbitMQ."""
