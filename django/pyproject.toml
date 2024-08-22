@@ -1,5 +1,6 @@
 [tool.poetry]
 name = "sistemas-embarcados"
+package-mode = false
 version = "0.1.0"
 description = ""
 authors = ["Paulo Vanzolini, Lucas Agnez e Rafael Gomes"]
@@ -9,6 +10,10 @@ readme = "README.md"
 python = "^3.10"
 django = "^4.2"
 uvicorn = "^0.30.6"
+pika = "^1.3.2"
+djangorestframework = "^3.15.2"
+prometheus-client = "^0.20.0"
+django-prometheus = "^2.3.1"
 
 
 [build-system]

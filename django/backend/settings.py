@@ -9,7 +9,7 @@ https://docs.djangoproject.com/en/5.1/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/5.1/ref/settings/
 """
-
+import os
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -20,17 +20,22 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/5.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-x7e8z0trw-5iulb826hp^3&i7^u21rnd&1m3gifu=3nhcpn9li'
+SECRET_KEY = os.environ.get("SECRET_KEY", "teste")
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
+RABBITMQ_HOST = os.environ.get("RABBITMQ_HOST",default='localhost')
+RABBITMQ_PORT = os.environ.get("RABBITMQ_PORT",default='5672')
+RABBITMQ_USER = os.environ.get("RABBITMQ_USER",default='user')
+RABBITMQ_PASSWORD = os.environ.get("RABBITMQ_PASSWORD",default='password')
 
 # Application definition
 
 INSTALLED_APPS = [
+    'turbidity',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -66,6 +71,46 @@ TEMPLATES = [
         },
     },
 ]
+
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'formatters': {
+        'verbose': {
+            'format': '{levelname} {asctime} {module} {message}',
+            'style': '{',
+        },
+        'simple': {
+            'format': '{levelname} {message}',
+            'style': '{',
+        },
+    },
+    'handlers': {
+        'console': {
+            'level': 'DEBUG',
+            'class': 'logging.StreamHandler',
+            'formatter': 'verbose',
+        },
+        'file': {
+            'level': 'INFO',
+            'class': 'logging.FileHandler',
+            'filename': os.path.join(BASE_DIR, 'rabbitmq_consumer.log'),
+            'formatter': 'verbose',
+        },
+    },
+    'loggers': {
+        'django': {
+            'handlers': ['console'],
+            'level': 'INFO',
+            'propagate': False,
+        },
+        '': {
+            'handlers': ['file', 'console'],
+            'level': 'DEBUG',
+            'propagate': False,
+        },
+    },
+}
 
 WSGI_APPLICATION = 'backend.wsgi.application'
 

@@ -34,11 +34,11 @@ services:
     image: rabbitmq:3-management
     container_name: rabbitmq
     ports:
-      - "3001:5672"
+      - "5672:5672"
       - "15672:15672"
     environment:
-      RABBITMQ_DEFAULT_USER: teste
-      RABBITMQ_DEFAULT_PASS: embedded@123
+      RABBITMQ_DEFAULT_USER: $RABBITMQ_USER
+      RABBITMQ_DEFAULT_PASS: $RABBITMQ_PASSWORD
     restart: always
 
   django-backend:
@@ -47,7 +47,10 @@ services:
       dockerfile: devops/Dockerfile
     restart: unless-stopped
     ports:
-      - 9093:9093
       - 8000:8000
+    env_file:
+      - ./django/.env
+    volumes:
+      - ./django:/app
     depends_on:
       - rabbitmq

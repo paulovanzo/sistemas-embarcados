@@ -1,5 +1,10 @@
 global:
   resolve_timeout: 1m
+  smtp_smarthost: 'smtp.gmail.com:587' # Endereço e porta do servidor SMTP do Google
+  smtp_from: $SOURCE_EMAIL      # Endereço de e-mail do remetente (deve ser uma conta do Gmail)
+  smtp_auth_username: $GOOGLE_ACCOUNT  # Seu e-mail do Gmail
+  smtp_auth_password: $GOOGLE_AUTH
+  smtp_require_tls: true
 
 route:
   receiver: 'email-notifications'
@@ -7,7 +12,7 @@ route:
 receivers:
   - name: 'email-notifications'
     email_configs:
-      - to: paulo.moura.109@ufrn.edu.br
+      - to: $TARGET_EMAIL
         send_resolved: true
         html: |
           <html>
