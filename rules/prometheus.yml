@@ -29,7 +29,8 @@ scrape_configs:
           group: 'Prometheus'
   - job_name: 'Monitor Turbidity'
     scrape_interval: 15s
+    metrics_path: /turbidity/prometheus/metrics
     static_configs:
-      - targets: ['django-backend:9093']
+      - targets: ['django-backend:8000']
         labels:
           group: "Servidor" 

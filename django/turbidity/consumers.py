@@ -79,7 +79,7 @@ class RabbitMQManager:
     def callback(self, ch, method, properties, body):
         try:
             # Converte a mensagem recebida (presumindo que seja um número)
-            value = float(body)
+            value = int.from_bytes(body, byteorder="big")
             # Atualiza a métrica Prometheus
             turdity.set(value)
             logger.info(f"Received {value} from RabbitMQ and updated Prometheus metric.")
