@@ -2,7 +2,7 @@ global:
   resolve_timeout: 1m
   smtp_smarthost: 'smtp.gmail.com:587' # Endereço e porta do servidor SMTP do Google
   smtp_from: $SOURCE_EMAIL      # Endereço de e-mail do remetente (deve ser uma conta do Gmail)
-  smtp_auth_username: $GOOGLE_ACCOUNT  # Seu e-mail do Gmail
+  smtp_auth_username: $SOURCE_EMAIL  # Seu e-mail do Gmail
   smtp_auth_password: $GOOGLE_AUTH
   smtp_require_tls: true
 

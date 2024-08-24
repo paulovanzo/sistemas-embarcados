@@ -15,4 +15,4 @@ COPY . /app/
 
 EXPOSE 8000
 
-CMD ["uvicorn", "backend.asgi:application", "--log-level", "info", "--host", "0.0.0.0", "--reload", "--port", "8000"]
+CMD ["uvicorn", "backend.asgi:application", "--host", "0.0.0.0", "--port", "8000"]

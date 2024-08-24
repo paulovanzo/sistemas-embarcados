@@ -47,8 +47,8 @@ services:
       dockerfile: devops/Dockerfile
     restart: unless-stopped
     container_name: django-backend
-    ports:
-      - 8000:8000
+    expose:
+      - 8000
     env_file:
       - ./django/.env
     volumes:
