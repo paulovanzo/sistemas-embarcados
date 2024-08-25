@@ -1,11 +1,13 @@
 #! /bin/bash
 
-mv .env.development .env
+cp .env.development .env
 
-mv django/.env.development django/.env
+cp django/.env.development django/.env
 
 source .env
 
-envsubst < docker-compose.yml > docker-compose-test.yml
+envsubst < alertmanager/config.yml > alertmanager/config-temp.yml && mv alertmanager/config-temp.yml alertmanager/config.yml
 
-docker compose -f docker-compose-test.yml up -d
+envsubst < docker-compose.yml > docker-compose-temp.yml && mv docker-compose-temp.yml docker-compose.yml
+
+docker compose up -d
