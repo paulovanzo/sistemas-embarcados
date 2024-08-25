@@ -2,10 +2,10 @@ groups:
 - name: Turbidity Alerts
   rules:
   - alert: HighTurbidity
-    expr: Turbidity > 3000
+    expr: Turbidity > 5
     for: 5m
     labels:
       severity: critical
     annotations:
       summary: "Turbidity level is too high!"
-      description: "Turbidity has exceeded 3000 for more than 5 minutes. Current value: {{ $value }}."
+      description: "Turbidity has exceeded 5 NTUs for more than 5 minutes. Current value: {{ $value }}."
