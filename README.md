@@ -32,12 +32,18 @@ e as variáveis do Django no arquivo *.env.development* no diretório ./django
 | SECRET_KEY        | Secret key utilizada pelo Django                   |
 
 
-daí é só executar o arquivo script.sh na raiz do projeto:
+daí execute o arquivo script.sh na raiz do projeto
 
 ```
 chmod +x script.sh
 ./script.sh
 ```
+
+Habilitar plugin MQTT 
+```rabbitmq-plugins enable rabbitmq_mqtt```
+
+Reinicie o container RabbitMQ
+```docker compose restart rabbitmq```
 
 ## Autores
 
