@@ -11,7 +11,7 @@ turbidity = Gauge('Turbidity', 'Valor de turbidez da água')
 logger = logging.getLogger('django')
 
 class MQTTManager:
-    def __init__(self, host=settings.RABBITMQ_HOST, port=settings.RABBITMQ_PORT, username=settings.RABBITMQ_USER, password=settings.RABBITMQ_PASSWORD, topic='metrics.turbidity'):
+    def __init__(self, host=settings.RABBITMQ_HOST, port=settings.RABBITMQ_PORT, username=settings.RABBITMQ_USER, password=settings.RABBITMQ_PASSWORD, topic="metrics.turbidity"):
         self.host = host
         self.port = port
         self.username = username
