@@ -1,5 +1,6 @@
 import paho.mqtt.client as mqtt
 from django.conf import settings
+import struct
 import logging
 import threading
 from prometheus_client import Gauge
@@ -49,7 +50,7 @@ class MQTTManager:
             # Converte a mensagem recebida (presumindo que seja um número em bytes)
             value = int.from_bytes(msg.payload, byteorder="big")
             # Atualiza a métrica Prometheus
-            turbidity.set(value)
+            turbidity.set(struct.unpack('>f', value.to_bytes(4, byteorder='big'))[0])
             logger.info(f"Received {value} from MQTT topic '{msg.topic}' and updated Prometheus metric.")
         except Exception as e:
             logger.error(f"Failed to process message from topic '{msg.topic}': {msg.payload}. Error: {e}")
