@@ -11,3 +11,5 @@ envsubst < alertmanager/config.yml > alertmanager/config-temp.yml && mv alertman
 envsubst < docker-compose.yml > docker-compose-temp.yml && mv docker-compose-temp.yml docker-compose.yml
 
 docker compose up -d
+docker compose exec rabbitmq rabbitmq-plugins enable rabbitmq_mqtt
+docker compose restart django-backend
